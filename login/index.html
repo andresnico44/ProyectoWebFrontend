@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Calificación</title>
+    <link rel="stylesheet" href="../login/styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>UFPS</h1>
+            <p>Sistema de Calificación de Profesores</p>
+        </div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="student-code">Código de Usuario</label>
+                <input type="text" id="student-code" placeholder="Ingrese su código" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            </div>
+            <button type="button" class="btn btn-login" onclick="authenticateUser();">
+                Iniciar Sesión
+            </button>
+            <button type="button" class="btn btn-forgot-password" onclick="location.href='../olvido-contrasena/index.html';">
+                ¿Olvidó su contraseña?
+            </button>
+            <!-- Nuevo botón de registro -->
+            <button type="button" class="btn btn-register" onclick="location.href='../registrarse/index.html';">
+                Registrarse
+            </button>
+        </form>
+        <div class="footer">
+            © 2024 Universidad Francisco de Paula Santander
+        </div>
+    </div>
+    <script src="../login/script.js"></script>
+</body>
+</html>

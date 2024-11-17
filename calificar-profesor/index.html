@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificar Profesor</title>
+    <link rel="stylesheet" href="../calificar-profesor/styles.css">
+</head>
+<body>
+    <div class="calificar-container">
+        <h2>Calificar Profesor</h2>
+
+        <div class="professor-info">
+            <div class="professor-photo-container">
+                <img id="professor-photo" src="../img/foto-profesor.jpg" alt="Foto del Profesor" class="professor-photo">
+            </div>
+            <h3 id="professor-name"></h3>
+            <p id="professor-email"></p>
+        </div>
+
+        <form>
+            <label for="calificacion">Calificación General (1-5):</label>
+            <input type="range" id="calificacion" name="calificacion" min="1" max="5" value="3" step="1" required>
+            <span id="calificacion-value">3</span>
+
+            <label for="claridad">Claridad en las Explicaciones:</label>
+            <input type="range" id="claridad" name="claridad" min="1" max="5" value="3" step="1" required>
+            <span id="claridad-value">3</span>
+
+            <label for="disponibilidad">Disponibilidad para Ayuda:</label>
+            <input type="range" id="disponibilidad" name="disponibilidad" min="1" max="5" value="3" step="1" required>
+            <span id="disponibilidad-value">3</span>
+
+            <label for="puntualidad">Puntualidad:</label>
+            <input type="range" id="puntualidad" name="puntualidad" min="1" max="5" value="3" step="1" required>
+            <span id="puntualidad-value">3</span>
+
+            <label for="observaciones-positivas">Observaciones Positivas:</label>
+            <textarea id="observaciones-positivas" name="observaciones-positivas"></textarea>
+
+            <label for="observaciones-negativas">Observaciones Negativas:</label>
+            <textarea id="observaciones-negativas" name="observaciones-negativas"></textarea>
+
+            <button type="submit" id="sendBtn">Enviar Calificación</button>
+            <button type="button" id="cancelBtn">Cancelar</button>
+        </form>
+    </div>
+    <script src="../calificar-profesor/script.js"></script>
+</body>
+</html>
