@@ -4,7 +4,6 @@ function calificarProfesor(nombre, materia, correo) {
 }
 
 function cerrarSesion() {
-    alert("Has cerrado sesión correctamente.");
     window.location.href = "../login/index.html";
 }
 
