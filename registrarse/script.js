@@ -1,42 +1,44 @@
-function registerUser(event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const roleSelect = document.getElementById("role");
+    const adminFields = document.getElementById("admin-fields");
+    const form = document.getElementById("register-form");
 
-    // Obtener los datos del formulario
-    const name = document.getElementById('name').value;
-    const studentCode = document.getElementById('student-code').value;
-    const password = document.getElementById('password').value;
-    const career = document.getElementById('career').value;
+    // Función para mostrar los campos según el rol seleccionado
+    function showFieldsBasedOnRole() {
+        const selectedRole = roleSelect.value;
 
-    // Crear el objeto con los datos a enviar (incluyendo id y rol)
-    const userData = {
-        id: 0, // Esto probablemente se generará automáticamente
-        nombre: name,
-        correo: "", // Si el correo es obligatorio, debes añadir un campo de correo en el formulario
-        codigo: studentCode,
-        contraseña: password,
-        carrera: career,
-        rol: 0 // Si el backend lo espera, pero si no, lo puedes omitir
-    };
-
-    // Enviar la solicitud POST al backend
-    fetch('http://localhost:8080/api/usuarios/registro', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => {
-        if (response.ok) {
-            alert("Registro exitoso");
-            window.location.href = "../login/index.html"; // Redirige al login
+        if (selectedRole === "admin") {
+            adminFields.style.display = "block"; // Mostrar campos de Administrador
         } else {
-            return response.json().then(data => {
-                alert("Error: " + (data.message || 'No se pudo completar el registro'));
-            });
+            adminFields.style.display = "none"; // Ocultar campos de Administrador
         }
-    })
-    .catch(error => {
-        alert("Error en la conexión: " + error.message);
-    });
-}
+    }
+
+    // Función para manejar el registro
+    function registerUser(event) {
+        event.preventDefault(); // Prevenir el envío por defecto del formulario
+
+        const selectedRole = roleSelect.value;
+
+        if (selectedRole === "admin") {
+            const username = document.getElementById("admin-user").value.trim();
+            const password = document.getElementById("admin-password").value.trim();
+
+            // Validación de los campos de Administrador
+            if (username && password) {
+                alert("¡Registro exitoso como Administrador!"); // Alerta de éxito
+            } else {
+                alert("Por favor, complete todos los campos de Administrador."); // Alerta de error
+            }
+        } else {
+            // En caso de que el rol sea 'estudiante', podemos agregar más lógica más adelante.
+            alert("Por favor, complete los campos del rol de Estudiante (si es necesario).");
+        }
+    }
+
+    // Escuchar el evento 'submit' del formulario para manejar el registro
+    form.addEventListener("submit", registerUser);
+
+    // Escuchar cambios en el select de rol
+    roleSelect.addEventListener("change", showFieldsBasedOnRole);
+});
