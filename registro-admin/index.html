@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Administrador</title>
+    <link rel="stylesheet" href="../registro-admin/styles.css">
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>Registrarse como Administrador</h1>
+            <p>Por favor, complete los datos para registrarse como administrador.</p>
+        </div>
+        <form id="register-form" onsubmit="return registerAdmin(event)">
+            <div class="form-group">
+                <label for="admin-username">Usuario</label>
+                <input type="text" id="admin-username" placeholder="Ingrese su usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Contraseña</label>
+                <input type="password" id="admin-password" placeholder="Ingrese su contraseña" required>
+            </div>
+            <button type="submit" class="btn btn-register">Registrarse</button>
+            <button type="button" class="btn btn-back" onclick="window.location.href='../login/index.html';">Volver</button>
+        </form>
+        
+        <!-- Contenedor para el mensaje dinámico de registro -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="../registro-admin/script.js"></script>
+</body>
+</html>

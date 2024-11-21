@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Alumno - Sistema de Calificación</title>
+    <link rel="stylesheet" href="../registro-alumno/styles.css"> <!-- Enlaza el archivo CSS -->
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Registro Alumno</h1>
+            <p>Complete el siguiente formulario para registrarse.</p>
+        </div>
+        <form id="register-form" onsubmit="registerStudent(event)">
+            <div class="form-group">
+                <label for="name">Nombre Completo</label>
+                <input type="text" id="name" placeholder="Ingrese su nombre completo" required>
+            </div>
+            <div class="form-group">
+                <label for="student-code">Código de Alumno</label>
+                <input type="text" id="student-code" placeholder="Ingrese su código" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Institucional</label>
+                <input type="email" id="email" placeholder="Ingrese su correo institucional" required>
+            </div>
+            <div class="form-group">
+                <label for="career">Carrera</label>
+                <select id="career" required>
+                    <option value="">Seleccione su carrera</option>
+                    <!-- Pregrado -->
+                    <option value="Administración de Empresas">Administración de Empresas</option>
+                    <option value="Arquitectura">Arquitectura</option>
+                    <option value="Comercio Internacional">Comercio Internacional</option>
+                    <option value="Comunicación Social">Comunicación Social</option>
+                    <option value="Contaduría Pública">Contaduría Pública</option>
+                    <option value="Derecho">Derecho</option>
+                    <option value="Enfermería">Enfermería</option>
+                    <option value="Ingeniería Agroindustrial">Ingeniería Agroindustrial</option>
+                    <option value="Ingeniería Agronómica">Ingeniería Agronómica</option>
+                    <option value="Ingeniería Ambiental">Ingeniería Ambiental</option>
+                    <option value="Ingeniería Biotecnológica">Ingeniería Biotecnológica</option>
+                    <option value="Ingeniería Civil">Ingeniería Civil</option>
+                    <option value="Ingeniería de Minas">Ingeniería de Minas</option>
+                    <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                    <option value="Ingeniería Electromecánica">Ingeniería Electromecánica</option>
+                    <option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
+                    <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                    <option value="Ingeniería Mecánica">Ingeniería Mecánica</option>
+                    <option value="Ingeniería Pecuaria">Ingeniería Pecuaria</option>
+                    <option value="Licenciatura en Matemáticas">Licenciatura en Matemáticas</option>
+                    <option value="Licenciatura en Ciencias Naturales y Educación Ambiental">Licenciatura en Ciencias Naturales y Educación Ambiental</option>
+                    <option value="Licenciatura en Educación Infantil">Licenciatura en Educación Infantil</option>
+                    <option value="Química Industrial">Química Industrial</option>
+                    <option value="Seguridad y Salud en el Trabajo">Seguridad y Salud en el Trabajo</option>
+                    <option value="Trabajo Social">Trabajo Social</option>
+                    <option value="Zootecnia">Zootecnia</option>
+
+                    <!-- Tecnológicos -->
+                    <option value="Tecnología en Obras Civiles">Tecnología en Obras Civiles</option>
+                    <option value="Tecnología en Procesos Industriales">Tecnología en Procesos Industriales</option>
+                    <option value="Tecnología en Analítica de Datos">Tecnología en Analítica de Datos</option>
+
+                    <!-- De Distancia -->
+                    <option value="Tecnología en Construcciones Civiles">Tecnología en Construcciones Civiles</option>
+                    <option value="Licenciatura en Educación Comunitaria">Licenciatura en Educación Comunitaria</option>
+                    <option value="Tecnología en Regencia de Farmacia">Tecnología en Regencia de Farmacia</option>
+
+                    <!-- Posgrados -->
+                    <option value="Diplomado en Docencia y Didáctica">Diplomado en Docencia y Didáctica</option>
+                    <option value="Diplomado en Didáctica de las Ciencias en Educación Superior">Diplomado en Didáctica de las Ciencias en Educación Superior</option>
+                    <option value="Especialización en Educación, Emprendimiento y Economía Solidaria">Especialización en Educación, Emprendimiento y Economía Solidaria</option>
+                    <option value="Especialización en Estructuras">Especialización en Estructuras</option>
+                    <option value="Especialización en Gerencia y Auditoría de la Calidad en Salud">Especialización en Gerencia y Auditoría de la Calidad en Salud</option>
+                    <option value="Especialización en Gestión de la Seguridad y la Salud en el Trabajo">Especialización en Gestión de la Seguridad y la Salud en el Trabajo</option>
+                    <option value="Especialización en Práctica Pedagógica">Especialización en Práctica Pedagógica</option>
+                    <option value="Especialización en Educación para la Atención a Población Afectada por el Conflicto Armado y en Problemática Fronteriza">Especialización en Educación para la Atención a Población Afectada por el Conflicto Armado y en Problemática Fronteriza</option>
+                    <option value="Especialización en Logística y Negocios Internacionales">Especialización en Logística y Negocios Internacionales</option>
+                    <option value="Maestría en Ciencias Biológicas">Maestría en Ciencias Biológicas</option>
+                    <option value="Maestría en Educación Matemática">Maestría en Educación Matemática</option>
+                    <option value="Maestría en Gerencia de Empresas">Maestría en Gerencia de Empresas</option>
+                    <option value="Maestría en Práctica Pedagógica">Maestría en Práctica Pedagógica</option>
+                    <option value="Maestría en Estudios Sociales y Educación para la Paz">Maestría en Estudios Sociales y Educación para la Paz</option>
+                    <option value="Maestría en Ingeniería de Recursos Hidráulicos">Maestría en Ingeniería de Recursos Hidráulicos</option>
+                    <option value="Maestría en TIC aplicadas a la Educación">Maestría en TIC aplicadas a la Educación</option>
+                    <option value="Maestría en Negocios Internacionales">Maestría en Negocios Internacionales</option>
+                    <option value="Doctorado en Educación">Doctorado en Educación</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            </div>
+            <button type="submit" class="btn btn-register">
+                Registrarse
+            </button>
+            <button type="button" class="btn btn-back" onclick="window.location.href='../login/index.html';">
+                Volver
+            </button>
+        </form>
+        <div id="message" class="message"></div>
+        <div class="footer">
+            © 2024 Universidad Francisco de Paula Santander
+        </div>
+    </div>
+    <script src="../registro-alumno/script.js"></script> <!-- Enlaza el archivo JavaScript -->
+</body>
+</html>

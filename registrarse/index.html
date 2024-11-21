@@ -11,86 +11,61 @@
         <div class="login-header">
             <h1>Registrarse</h1>
         </div>
-        <form id="register-form" onsubmit="registerUser(event)">
+        <form id="register-form">
             <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" id="name" placeholder="Ingrese su nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="student-code">Código de Estudiante</label>
-                <input type="text" id="student-code" placeholder="Ingrese su código" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" placeholder="Ingrese su contraseña" required>
-            </div>
-            <div class="form-group">
-                <label for="career">Carrera</label>
-                <select id="career" required>
-                    <option value="" disabled selected>Seleccione su carrera</option>
-                    <optgroup label="PREGRADO">
-                        <option value="administracion">Administración de Empresas</option>
-                        <option value="arquitectura">Arquitectura</option>
-                        <option value="comercio_internacional">Comercio Internacional</option>
-                        <option value="comunicacion_social">Comunicación Social (Acreditada)</option>
-                        <option value="contaduria_publica">Contaduría Pública</option>
-                        <option value="derecho">Derecho</option>
-                        <option value="enfermeria">Enfermería (Acreditada)</option>
-                        <option value="ingenieria_agroindustrial">Ingeniería Agroindustrial</option>
-                        <option value="ingenieria_agronomica">Ingeniería Agronómica (Acreditada)</option>
-                        <option value="ingenieria_ambiental">Ingeniería Ambiental (Acreditada)</option>
-                        <option value="ingenieria_biotecnologica">Ingeniería Biotecnológica (Acreditada)</option>
-                        <option value="ingenieria_civil">Ingeniería Civil</option>
-                        <option value="ingenieria_de_minas">Ingeniería de Minas</option>
-                        <option value="ingenieria_de_sistemas">Ingeniería de Sistemas (Acreditada)</option>
-                        <option value="ingenieria_electromecanica">Ingeniería Electromecánica</option>
-                        <option value="ingenieria_electronica">Ingeniería Electrónica (Acreditada)</option>
-                        <option value="ingenieria_industrial">Ingeniería Industrial</option>
-                        <option value="ingenieria_mecanica">Ingeniería Mecánica</option>
-                        <option value="licenciatura_matematicas">Licenciatura en Matemáticas (Acreditada)</option>
-                        <option value="licenciatura_ciencias_naturales">Licenciatura en Ciencias Naturales y Educación Ambiental</option>
-                        <option value="licenciatura_educacion_infantil">Licenciatura en Educación Infantil</option>
-                        <option value="quimica_industrial">Química Industrial</option>
-                        <option value="seguridad_salud_trabajo">Seguridad y Salud en el Trabajo</option>
-                        <option value="trabajo_social">Trabajo Social</option>
-                        <option value="zootecnia">Zootecnia</option>
-                    </optgroup>
-                    <optgroup label="TECNOLÓGICOS">
-                        <option value="tecnologia_obras_civiles">Tecnología en Obras Civiles</option>
-                        <option value="tecnologia_procesos_industriales">Tecnología en Procesos Industriales</option>
-                        <option value="tecnologia_analitica_datos">Tecnología en Analítica de Datos (Virtual)</option>
-                    </optgroup>
-                    <optgroup label="POSGRADO">
-                        <option value="diplomados_docencia_didactica">Diplomado en Docencia y Didáctica</option>
-                        <option value="diplomados_didactica_ciencias">Diplomado en Didáctica de las Ciencias en Educación Superior</option>
-                        <option value="especializacion_educacion_emprendimiento">Especialización en Educación, Emprendimiento y Economía Solidaria</option>
-                        <option value="especializacion_estructuras">Especialización en Estructuras</option>
-                        <option value="especializacion_gerencia_calidad_salud">Especialización en Gerencia y Auditoría de la Calidad en Salud (en convenio)</option>
-                        <option value="especializacion_gestion_seguridad_salud">Especialización en Gestión de la Seguridad y la Salud en el Trabajo (en convenio)</option>
-                        <option value="especializacion_practica_pedagogica">Especialización en Práctica Pedagógica</option>
-                        <option value="especializacion_atencion_conflicto">Especialización en Educación para la Atención a Población Afectada por el Conflicto Armado y en Problemática Fronteriza</option>
-                        <option value="especializacion_logistica_negocios">Especialización en Logística y Negocios Internacionales</option>
-                        <option value="maestria_ciencias_biologicas">Maestría en Ciencias Biológicas</option>
-                        <option value="maestria_educacion_matematica">Maestría en Educación Matemática</option>
-                        <option value="maestria_gerencia_empresas">Maestría en Gerencia de Empresas</option>
-                        <option value="maestria_practica_pedagogica">Maestría en Práctica Pedagógica (Acreditada)</option>
-                        <option value="maestria_estudios_sociales">Maestría en Estudios Sociales y Educación para la Paz</option>
-                        <option value="maestria_ingenieria_recursos_hidraulicos">Maestría en Ingeniería de Recursos Hidráulicos</option>
-                        <option value="maestria_tic_educacion">Maestría en TIC aplicadas a la Educación (Virtual)</option>
-                        <option value="maestria_negocios_internacionales">Maestría en Negocios Internacionales</option>
-                        <option value="doctorado_educacion">Doctorado en Educación</option>
-                    </optgroup>
-                    <optgroup label="A DISTANCIA">
-                        <option value="tecnologia_construcciones_civiles">Tecnología en Construcciones Civiles</option>
-                        <option value="licenciatura_educacion_comunitaria">Licenciatura en Educación Comunitaria</option>
-                        <option value="tecnologia_regencia_farmacia">Tecnología en Regencia de Farmacia</option>
-                    </optgroup>
+                <label for="role">Rol</label>
+                <select id="role" onchange="showFieldsBasedOnRole()" required>
+                    <option value="" disabled selected>Seleccione su rol</option>
+                    <option value="admin">Administrador</option>
+                    <option value="student">Estudiante</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-register">
+            
+            <div id="admin-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="admin-user">Usuario</label>
+                    <input type="text" id="admin-user" placeholder="Ingrese su usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Contraseña</label>
+                    <input type="password" id="admin-password" placeholder="Ingrese su contraseña" required>
+                </div>
+            </div>
+
+            <div id="student-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" placeholder="Ingrese su nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-code">Código de Estudiante</label>
+                    <input type="text" id="student-code" placeholder="Ingrese su código" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico Institucional</label>
+                    <input type="email" id="email" placeholder="Ingrese su correo" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+                </div>
+                <div class="form-group">
+                    <label for="career">Carrera</label>
+                    <select id="career" required>
+                        <option value="" disabled selected>Seleccione su carrera</option>
+                        <!-- Carreras Predefinidas -->
+                        <option value="administracion">Administración de Empresas</option>
+                        <option value="arquitectura">Arquitectura</option>
+                        <!-- Puedes seguir con las demás opciones de carrera -->
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-register" id="register-button">
                 Registrarse
             </button>
         </form>
+        <div id="message" class="message"></div>
         <button type="button" class="btn btn-back" onclick="location.href='../login/index.html';">
             Volver
         </button>
