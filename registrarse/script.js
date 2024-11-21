@@ -1,10 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 function registerUser(event) {
     event.preventDefault();
     alert("Registro exitoso");
     window.location.href = "../login/index.html";
 }
 =======
+=======
+>>>>>>> e05eefb6a921af4d55b8d829b52de1a0aedaa3ec
 document.addEventListener("DOMContentLoaded", () => {
     const roleSelect = document.getElementById("role");
     const adminFields = document.getElementById("admin-fields");
@@ -49,4 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Escuchar cambios en el select de rol
     roleSelect.addEventListener("change", showFieldsBasedOnRole);
 });
+<<<<<<< HEAD
 >>>>>>> e05eefb (Mejoras en el login, registro (incluyendo la separación entre registro de alumno y administrador))
+=======
+>>>>>>> e05eefb6a921af4d55b8d829b52de1a0aedaa3ec
