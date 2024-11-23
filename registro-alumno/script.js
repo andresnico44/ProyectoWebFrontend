@@ -24,6 +24,11 @@ function registerStudent(event) {
         return;
     }
 
+    if(students.some(student => student.email === email)){
+        showMessage("Este correo electrónico ya está registrado.", "error");
+        return;
+    }
+
     // Crear el nuevo alumno
     const newStudent = {
         name: name,
@@ -32,7 +37,7 @@ function registerStudent(event) {
         career: career,
         password: password
     };
-
+/*
     // Guardar al nuevo alumno en localStorage
     students.push(newStudent);
     localStorage.setItem("students", JSON.stringify(students));
@@ -40,10 +45,11 @@ function registerStudent(event) {
     // Mostrar mensaje de éxito
     showMessage("Registro exitoso. ¡Bienvenido!", "success");
 }
-
+*/
 // Función para mostrar mensajes dinámicos
 function showMessage(message, type) {
     const messageElement = document.getElementById("message");
     messageElement.innerText = message;
     messageElement.className = `message ${type}`;
+}
 }
