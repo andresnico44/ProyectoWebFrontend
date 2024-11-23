@@ -1,5 +1,5 @@
 // Función para registrar al nuevo alumno
-function registerStudent(event) {
+async function registerStudent(event) {
     event.preventDefault();
 
     // Obtener los valores del formulario
@@ -31,25 +31,40 @@ function registerStudent(event) {
 
     // Crear el nuevo alumno
     const newStudent = {
-        name: name,
-        studentCode: studentCode,
-        email: email,
-        career: career,
-        password: password
+        nombre: name,
+        codigo: studentCode,
+        correo: email,
+        carrera: career,
+        contraseña: password
     };
-/*
-    // Guardar al nuevo alumno en localStorage
-    students.push(newStudent);
-    localStorage.setItem("students", JSON.stringify(students));
 
-    // Mostrar mensaje de éxito
-    showMessage("Registro exitoso. ¡Bienvenido!", "success");
+    try {
+        // Hacer la solicitud POST a la API
+        const response = await fetch("http://localhost:8080/api/estudiantes/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newStudent)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            showMessage("Registro exitoso. ¡Bienvenido!", "success");
+            console.log("Estudiante registrado:", result);
+        } else {
+            const errorData = await response.json();
+            showMessage(errorData.message || "Error al registrar al estudiante.", "error");
+        }
+    } catch (error) {
+        showMessage("Hubo un problema al conectar con el servidor.", "error");
+        console.error("Error de conexión:", error);
+    }
 }
-*/
+
 // Función para mostrar mensajes dinámicos
 function showMessage(message, type) {
     const messageElement = document.getElementById("message");
     messageElement.innerText = message;
     messageElement.className = `message ${type}`;
-}
 }
