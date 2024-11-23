@@ -1,6 +1,6 @@
 // Función para registrar al administrador
-function registerAdmin(event) {
-    event.preventDefault();  // Evita el envío del formulario
+async function registerAdmin(event) {
+    event.preventDefault(); // Evita el envío del formulario
 
     // Obtener los valores de los campos
     const username = document.getElementById('admin-username').value;
@@ -9,34 +9,39 @@ function registerAdmin(event) {
     // Referencia al contenedor de mensajes
     const messageContainer = document.getElementById('message');
 
-    // Verificar si el administrador ya está registrado
-    const storedAdmin = localStorage.getItem('admin');
+    // Crear el objeto para enviar al backend
+    const newAdmin = {
+        usuario: username,
+        contraseña: password
+    };
 
-    if (storedAdmin) {
-        // Si el administrador ya está registrado
-        messageContainer.textContent = 'Ya existe un administrador registrado.';
-        messageContainer.classList.remove('success');
-        messageContainer.classList.add('error');
-    } else {
-        // Solo permitir el registro con usuario 'admin' y contraseña 'admin'
-        if (username === 'admin' && password === 'admin') {
-            // Guardar el administrador en el localStorage
-            localStorage.setItem('admin', JSON.stringify({ username, password }));
+    try {
+        // Hacer la solicitud POST al backend
+        const response = await fetch("http://localhost:8080/api/administradores/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newAdmin), // Convertir objeto a JSON
+        });
 
+        if (response.ok) {
+            const result = await response.json();
             // Mostrar mensaje de éxito
             messageContainer.textContent = 'Registro exitoso como Administrador!';
             messageContainer.classList.remove('error');
             messageContainer.classList.add('success');
+            console.log("Administrador registrado:", result);
         } else {
-            // Mostrar mensaje de error si las credenciales no son correctas
-            messageContainer.textContent = 'Usuario o contraseña incorrectos. Por favor intente nuevamente.';
+            const errorData = await response.json();
+            messageContainer.textContent = errorData.message || "Error al registrar al administrador.";
             messageContainer.classList.remove('success');
             messageContainer.classList.add('error');
         }
+    } catch (error) {
+        messageContainer.textContent = "Error al conectar con el servidor.";
+        messageContainer.classList.remove('success');
+        messageContainer.classList.add('error');
+        console.error("Error de conexión:", error);
     }
 }
-
-// Limpiar el localStorage cuando el usuario abandone la página
-window.addEventListener('beforeunload', function() {
-    localStorage.removeItem('admin');
-});

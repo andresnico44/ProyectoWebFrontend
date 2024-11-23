@@ -1,5 +1,5 @@
 // Función para registrar al nuevo alumno
-function registerStudent(event) {
+async function registerStudent(event) {
     event.preventDefault();
 
     // Obtener los valores del formulario
@@ -15,30 +15,37 @@ function registerStudent(event) {
         return;
     }
 
-    // Obtener los estudiantes previamente registrados
-    let students = JSON.parse(localStorage.getItem("students")) || [];
-
-    // Verificar si el código del estudiante ya está registrado
-    if (students.some(student => student.studentCode === studentCode)) {
-        showMessage("Este código de alumno ya está registrado.", "error");
-        return;
-    }
-
-    // Crear el nuevo alumno
+    // Crear el objeto de datos para enviar
     const newStudent = {
-        name: name,
-        studentCode: studentCode,
-        email: email,
-        career: career,
-        password: password
+        nombre: name,
+        codigo: studentCode,
+        correo: email,
+        carrera: career,
+        contraseña: password
     };
 
-    // Guardar al nuevo alumno en localStorage
-    students.push(newStudent);
-    localStorage.setItem("students", JSON.stringify(students));
+    try {
+        // Hacer la solicitud POST a la API
+        const response = await fetch("http://localhost:8080/api/estudiantes/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newStudent)
+        });
 
-    // Mostrar mensaje de éxito
-    showMessage("Registro exitoso. ¡Bienvenido!", "success");
+        if (response.ok) {
+            const result = await response.json();
+            showMessage("Registro exitoso. ¡Bienvenido!", "success");
+            console.log("Estudiante registrado:", result);
+        } else {
+            const errorData = await response.json();
+            showMessage(errorData.message || "Error al registrar al estudiante.", "error");
+        }
+    } catch (error) {
+        showMessage("Hubo un problema al conectar con el servidor.", "error");
+        console.error("Error de conexión:", error);
+    }
 }
 
 // Función para mostrar mensajes dinámicos
