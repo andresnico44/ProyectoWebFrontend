@@ -4,14 +4,25 @@ async function registerAdmin(event) {
 
     // Obtener los valores de los campos
     const username = document.getElementById('admin-username').value;
+    const email = document.getElementById('admin-email').value;
     const password = document.getElementById('admin-password').value;
+    const adminKey = document.getElementById('admin-key').value;
 
     // Referencia al contenedor de mensajes
     const messageContainer = document.getElementById('message');
 
+    // Verificar la clave especial de permiso
+    if (adminKey !== "admin") {
+        messageContainer.textContent = "Clave especial incorrecta. No tiene permiso para registrarse.";
+        messageContainer.classList.remove('success');
+        messageContainer.classList.add('error');
+        return;
+    }
+
     // Crear el objeto para enviar al backend
     const newAdmin = {
         usuario: username,
+        correo: email,
         contraseña: password
     };
 
@@ -44,10 +55,9 @@ async function registerAdmin(event) {
         messageContainer.classList.add('error');
         console.error("Error de conexión:", error);
     }
+}
 
-    // Limpiar el localStorage cuando el usuario abandone la página
+// Limpiar el localStorage cuando el usuario abandone la página
 window.addEventListener('beforeunload', function() {
     localStorage.removeItem('admin');
 });
-
-}
