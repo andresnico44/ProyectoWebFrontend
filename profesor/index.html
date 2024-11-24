@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Profesor</title>
+    <link rel="stylesheet" href="../profesor/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Librería Chart.js -->
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Perfil del Profesor</h1>
+            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </header>
+
+        <!-- Información del Profesor -->
+        <div class="profile-container">
+            <div class="profile-header">
+                <img src="../img/profeflork.jpg" alt="Foto del Profesor" class="professor-photo">
+                <div class="profile-info">
+                    <h2>Nombre del Profesor</h2>
+                    <p>Correo: <a href="mailto:profesor.email@ufps.edu.co">profesor.email@ufps.edu.co</a></p>
+                    <p>Calificación General: <span class="general-rating">4.3 / 5</span></p>
+                    <p>Claridad en las Explicaciones: <span id="claridad">4.5 / 5</span></p>
+                    <p>Disponibilidad para Ayuda: <span id="disponibilidad">4.2 / 5</span></p>
+                    <p>Puntualidad: <span id="puntualidad">4.0 / 5</span></p>
+                </div>
+            </div>
+
+            <!-- Gráfico de Calificaciones -->
+            <div class="chart-container">
+                <canvas id="ratingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Materias del Profesor -->
+        <section class="subjects-section">
+            <h3>Materias Dictadas</h3>
+            <div class="subjects-grid">
+                <!-- Tarjetas dinámicas -->
+                <div class="subject-card">
+                    <div class="subject-details">
+                        <h4>Bases de Datos</h4>
+                        <p>Calificación: <span>4 / 5</span></p>
+                    </div>
+                    <button class="btn-calificar" onclick="redirigirCalificar()">Calificar</button>
+                </div>
+                <div class="subject-card">
+                    <div class="subject-details">
+                        <h4>Programación Web</h4>
+                        <p>Calificación: <span>3.5 / 5</span></p>
+                    </div>
+                    <button class="btn-calificar" onclick="redirigirCalificar()">Calificar</button>
+                </div>
+                <div class="subject-card">
+                    <div class="subject-details">
+                        <h4>Estructuras de Datos</h4>
+                        <p>Calificación: <span>4.7 / 5</span></p>
+                    </div>
+                    <button class="btn-calificar" onclick="redirigirCalificar()">Calificar</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../profesor/script.js"></script>
+</body>
+</html>
