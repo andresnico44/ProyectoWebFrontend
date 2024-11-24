@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio de Contraseña</title>
+    <link rel="stylesheet" href="../cambio-contrasena/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="recovery-container">
+        <div class="recovery-header">
+            <h1>Cambio de Contraseña</h1>
+            <p>Por favor, ingresa y confirma tu nueva contraseña.</p>
+        </div>
+        <form id="cambio-contrasena-form" onsubmit="return cambiarContrasena()">
+            <div class="form-group">
+                <label for="newPassword">Nueva Contraseña:</label>
+                <input type="password" id="newPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar Contraseña:</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+            <div id="message" class="message"></div>
+            <button type="submit" class="btn btn-send">Enviar</button>
+            <button type="button" class="btn btn-cancel" onclick="redirigirLogin()">Cancelar</button>
+        </form>
+    </div>
+    <script src="../cambio-contrasena/script.js"></script>
+</body>
+</html>
