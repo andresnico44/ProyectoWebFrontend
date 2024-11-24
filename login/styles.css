@@ -8,6 +8,10 @@ body {
     height: 100vh;
     background: #fdf5e6;
     background-size: 400px 400px;
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
 .login-container {

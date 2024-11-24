@@ -3,6 +3,10 @@ body {
     margin: 0;
     padding: 0;
     background-color: #fdf5e6;
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
 .calificar-container {
