@@ -6,7 +6,7 @@ function calificarProfesor(nombre, materia, correo) {
 function cerrarSesion() {
     window.location.href = "../login/index.html";
 }
-
+/*
 document.addEventListener('DOMContentLoaded', function() {
     const profesorCards = document.querySelectorAll('.professor-card');
 
@@ -16,4 +16,4 @@ document.addEventListener('DOMContentLoaded', function() {
             card.classList.add('calificado');
         }
     });
-});
+});*/

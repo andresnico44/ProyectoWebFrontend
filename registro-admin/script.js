@@ -44,4 +44,10 @@ async function registerAdmin(event) {
         messageContainer.classList.add('error');
         console.error("Error de conexión:", error);
     }
+
+    // Limpiar el localStorage cuando el usuario abandone la página
+window.addEventListener('beforeunload', function() {
+    localStorage.removeItem('admin');
+});
+
 }
