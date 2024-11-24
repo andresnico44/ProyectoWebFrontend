@@ -1,3 +1,4 @@
+/* Estilo general */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -10,6 +11,7 @@ body {
     font-style: normal;
 }
 
+/* Contenedor principal */
 .main-container {
     max-width: 1100px;
     margin: 0 auto;
@@ -19,6 +21,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Cabecera */
 header {
     text-align: center;
     margin-bottom: 40px;
@@ -35,6 +38,7 @@ header p {
     color: #777;
 }
 
+/* Barra de búsqueda */
 #searchBar {
     width: 100%;
     padding: 12px;
@@ -45,6 +49,7 @@ header p {
     box-sizing: border-box;
 }
 
+/* Botón de cerrar sesión */
 button.btn-cerrar-sesion {
     background-color: #d32f2f;
     color: white;
@@ -61,6 +66,7 @@ button.btn-cerrar-sesion:hover {
     background-color: #b71c1c;
 }
 
+/* Contenedor de profesores */
 .professors-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -68,6 +74,7 @@ button.btn-cerrar-sesion:hover {
     margin-top: 20px;
 }
 
+/* Tarjeta del profesor */
 .professor-card {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -83,6 +90,7 @@ button.btn-cerrar-sesion:hover {
     box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
 }
 
+/* Foto del profesor */
 .professor-photo {
     width: 120px;
     height: 120px;
@@ -92,10 +100,17 @@ button.btn-cerrar-sesion:hover {
     object-fit: cover;
 }
 
+/* Información del profesor */
 .professor-info h3 {
     font-size: 1.5em;
     color: #333;
     margin-bottom: 10px;
+    cursor: pointer; /* Añadido para cambiar el cursor a pointer */
+    text-decoration: underline;
+}
+
+.professor-info h3:hover{
+    color: #d32f2f;
 }
 
 .professor-info p {
@@ -103,6 +118,7 @@ button.btn-cerrar-sesion:hover {
     color: #777;
 }
 
+/* Botón de calificar */
 button.btn-calificar {
     background-color: #d32f2f;
     color: white;
@@ -119,6 +135,7 @@ button.btn-calificar:hover {
     background-color: #b71c1c;
 }
 
+/* Mensaje de calificado */
 .calificado-mensaje {
     display: none;
     color: green;

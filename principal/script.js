@@ -1,3 +1,20 @@
+// Función para redirigir al perfil del profesor
+function redirigirPerfil() {
+    window.location.href = "../profesor/index.html";
+}
+
+// Función para redirigir a la página de calificar profesor
+function calificarProfesor(nombre, materia, correo) {
+    const url = `../calificar-profesor/index.html?nombre=${encodeURIComponent(nombre)}&materia=${encodeURIComponent(materia)}&correo=${encodeURIComponent(correo)}`;
+    window.location.href = url;
+}
+
+// Función para cerrar sesión
+function cerrarSesion() {
+    window.location.href = "../login/index.html";
+}
+
+// Implementación de la barra de búsqueda
 document.getElementById('searchBar').addEventListener('input', function() {
     let filter = this.value.toLowerCase();
     let professorCards = document.getElementsByClassName('professor-card');
@@ -14,14 +31,6 @@ document.getElementById('searchBar').addEventListener('input', function() {
     });
 });
 
-function calificarProfesor(nombre, materia, correo) {
-    const url = `../calificar-profesor/index.html?nombre=${encodeURIComponent(nombre)}&materia=${encodeURIComponent(materia)}&correo=${encodeURIComponent(correo)}`;
-    window.location.href = url;
-}
-
-function cerrarSesion() {
-    window.location.href = "../login/index.html";
-}
 /*
 document.addEventListener('DOMContentLoaded', function() {
     const profesorCards = document.querySelectorAll('.professor-card');

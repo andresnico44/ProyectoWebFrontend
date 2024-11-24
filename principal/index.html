@@ -16,14 +16,14 @@
             <h1>Bienvenido</h1>
             <p>Carrera: </p>
             <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
-        </header>        
+        </header>
 
         <div class="professors-container">
             <!-- Profesor 1 -->
             <div class="professor-card" data-profesor="Carlos López">
                 <img src="../img/foto-profesor1.jpg" alt="Profesor 1" class="professor-photo">
                 <div class="professor-info">
-                    <h3>Carlos López</h3>
+                    <h3 onclick="redirigirPerfil()">Carlos López</h3>
                     <p>Materia: Programación Avanzada</p>
                     <p>Correo: carlos.lopez@ufps.edu.co</p>
                     <button class="btn-calificar" onclick="calificarProfesor('Carlos López', 'Programación Avanzada', 'carlos.lopez@ufps.edu.co')">Calificar</button>
@@ -35,7 +35,7 @@
             <div class="professor-card" data-profesor="Ana María García">
                 <img src="../img/foto-profesor2.jpg" alt="Profesor 2" class="professor-photo">
                 <div class="professor-info">
-                    <h3>Ana María García</h3>
+                    <h3 onclick="redirigirPerfil()">Ana María García</h3>
                     <p>Materia: Estructuras de Datos</p>
                     <p>Correo: ana.garcia@ufps.edu.co</p>
                     <button class="btn-calificar" onclick="calificarProfesor('Ana María García', 'Estructuras de Datos', 'ana.garcia@ufps.edu.co')">Calificar</button>
@@ -47,7 +47,7 @@
             <div class="professor-card" data-profesor="Ricardo Mendoza">
                 <img src="../img/foto-profesor3.jpg" alt="Profesor 3" class="professor-photo">
                 <div class="professor-info">
-                    <h3>Ricardo Mendoza</h3>
+                    <h3 onclick="redirigirPerfil()">Ricardo Mendoza</h3>
                     <p>Materia: Matemáticas Discretas</p>
                     <p>Correo: ricardo.mendoza@ufps.edu.co</p>
                     <button class="btn-calificar" onclick="calificarProfesor('Ricardo Mendoza', 'Matemáticas Discretas', 'ricardo.mendoza@ufps.edu.co')">Calificar</button>
