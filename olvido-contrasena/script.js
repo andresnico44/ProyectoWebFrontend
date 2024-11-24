@@ -1,40 +1,56 @@
-function sendRecoveryLink(event) {
+document.getElementById("recovery-form").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const studentCode = document.getElementById("student-code").value.trim();
+
+    const codeOrUser = document.getElementById("student-code").value.trim();
     const email = document.getElementById("email").value.trim();
 
-    if (studentCode && email) {
-        const message = "Se ha enviado un correo electrónico de recuperación a " + email;
-        showAlert(message);
+    // Validar campos
+    if (!codeOrUser || !email) {
+        showMessage("Por favor, complete todos los campos.", "error");
+        return;
+    }
 
-        document.getElementById("student-code").value = "";
-        document.getElementById("email").value = "";
+    // Validar formato de correo
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showMessage("El correo electrónico no es válido.", "error");
+        return;
+    }
+
+    const isStudent = !isNaN(codeOrUser); // Diferenciar entre estudiantes y administradores
+    const recoveryData = { email: email };
+    let endpoint;
+
+    if (isStudent) {
+        endpoint = "http://localhost:8080/api/estudiantes/recuperar-contrasena";
+        recoveryData.codigo = codeOrUser;
     } else {
-        showAlert("Por favor, rellene todos los campos antes de enviar.");
+        endpoint = "http://localhost:8080/api/administradores/recuperar-contrasena";
+        recoveryData.usuario = codeOrUser;
     }
-}
 
-function showAlert(message) {
-    const alertBox = document.createElement("div");
-    alertBox.classList.add("alert-box");
-    alertBox.innerHTML = `
-        <div class="alert-content">
-            <p>${message}</p>
-            <button onclick="closeAlert()">Cerrar</button>
-        </div>
-    `;
-    document.body.appendChild(alertBox);
-}
+    //const submitButton = document.querySelector("#submit-button");
+    //submitButton.disabled = true; // Deshabilitar botón
 
-function closeAlert() {
-    const alertBox = document.querySelector(".alert-box");
-    if (alertBox) {
-        alertBox.remove();
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(recoveryData),
+        });
+
+        if (response.ok) {
+            showMessage("Se ha enviado un correo con el enlace de recuperación.", "success");
+        } else {
+            const errorData = await response.json();
+            showMessage(errorData.message || "No se pudo procesar la solicitud.", "error");
+        }
+    } catch (error) {
+        console.error("Error al conectar con el servidor:", error);
+        showMessage("Hubo un problema al conectar con el servidor.", "error");
+    } finally {
+        submitButton.disabled = false; // Rehabilitar botón
     }
-}
-
-function cancelRecovery() {
-    window.location.href = "../login/index.html";
-}
-
-document.getElementById("recovery-form").addEventListener("submit", sendRecoveryLink);
+});
