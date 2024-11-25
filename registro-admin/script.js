@@ -6,14 +6,13 @@ async function registerAdmin(event) {
     const username = document.getElementById('admin-username').value;
     const email = document.getElementById('admin-email').value;
     const password = document.getElementById('admin-password').value;
-    const adminKey = document.getElementById('admin-key').value;
 
     // Referencia al contenedor de mensajes
     const messageContainer = document.getElementById('message');
 
-    // Verificar la clave especial de permiso
-    if (adminKey !== "admin") {
-        messageContainer.textContent = "Clave especial incorrecta. No tiene permiso para registrarse.";
+    // Verificar que los campos no estén vacíos
+    if (!username || !email || !password) {
+        messageContainer.textContent = "Todos los campos son obligatorios.";
         messageContainer.classList.remove('success');
         messageContainer.classList.add('error');
         return;
@@ -61,3 +60,6 @@ async function registerAdmin(event) {
 window.addEventListener('beforeunload', function() {
     localStorage.removeItem('admin');
 });
+
+// Asignar el evento al formulario
+document.getElementById('register-form').addEventListener('submit', registerAdmin);

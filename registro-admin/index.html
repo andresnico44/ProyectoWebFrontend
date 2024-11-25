@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="register-container">
         <div class="register-header">
             <h1>Registrarse como Administrador</h1>
             <p>Por favor, complete los datos para registrarse como administrador.</p>
         </div>
-        <form id="register-form" onsubmit="return registerAdmin(event)">
+        <form id="register-form">
             <div class="form-group">
                 <label for="admin-username">Usuario</label>
                 <input type="text" id="admin-username" placeholder="Ingrese su usuario" required>
@@ -30,16 +32,16 @@
             </div>
             <div class="form-group">
                 <label for="admin-key">Token de administrador</label>
-                <input type="password" id="admin-key" placeholder="Ingrese la clave especial" required>
+                <input type="password" id="admin-key" placeholder="Ingrese la clave especial">
             </div>
             <button type="submit" class="btn btn-register">Registrarse</button>
-            <button type="button" class="btn btn-back" onclick="window.location.href='../login/index.html';">Volver</button>
+            <button type="button" class="btn btn-back"
+                onclick="window.location.href='../login/index.html';">Volver</button>
         </form>
-        
-        <!-- Contenedor para el mensaje dinámico de registro -->
         <div id="message" class="message"></div>
     </div>
 
     <script src="../registro-admin/script.js"></script>
 </body>
+
 </html>
