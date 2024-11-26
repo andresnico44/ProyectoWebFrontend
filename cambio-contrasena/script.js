@@ -3,7 +3,7 @@ const token = urlParams.get("token");
 
 if (!token) {
     alert("El enlace no es válido.");
-    window.location.href = "http://127.0.0.1:4455"; // Redirige al login u otra página
+    window.location.href = "http://127.0.0.1:5500"; // Redirige al login u otra página
 }
 
 async function enviarCambioContrasena(event) {
@@ -100,5 +100,5 @@ document
     .addEventListener("submit", enviarCambioContrasena);
 
 function redirigirLogin() {
-    window.location.href = "http://127.0.0.1:4455"; // Redirigir al login
+    window.location.href = "http://127.0.0.1:5500"; // Redirigir al login
 }

@@ -107,32 +107,6 @@ body {
     transform: scale(1.02);
 }
 
-/* Botón de "Registrarse como Administrador" */
-.btn-register-admin {
-    background-color: #388e3c;
-    color: #ffffff;
-    margin-top: 15px;
-    border: 1px solid #2c6c2f;
-}
-
-.btn-register-admin:hover {
-    background-color: #2c6c2f;
-    transform: scale(1.02);
-}
-
-/* Botón de "Registrarse como Alumno" */
-.btn-register-alumno {
-    background-color: #1976d2;
-    color: #ffffff;
-    margin-top: 15px;
-    border: 1px solid #1565c0;
-}
-
-.btn-register-alumno:hover {
-    background-color: #1565c0;
-    transform: scale(1.02);
-}
-
 .footer {
     font-size: 12px;
     color: #aaa;
