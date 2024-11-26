@@ -83,6 +83,7 @@ button.btn-cerrar-sesion:hover {
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .professor-card:hover {
@@ -107,10 +108,6 @@ button.btn-cerrar-sesion:hover {
     margin-bottom: 10px;
     cursor: pointer; /* Añadido para cambiar el cursor a pointer */
     text-decoration: underline;
-}
-
-.professor-info h3:hover{
-    color: #d32f2f;
 }
 
 .professor-info p {
