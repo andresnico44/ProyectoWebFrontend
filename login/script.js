@@ -4,12 +4,12 @@ async function authenticateUser(event) {
 
     // Validar el formulario antes de proceder
     if (form.checkValidity()) {
-        const email = document.getElementById("student-code").value.trim();  // Cambiado 'codigo' a 'email'
+        const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
 
         // Crear el objeto con las credenciales del usuario
         const credentials = {
-            correo: email,  // Usar 'correo' en lugar de 'codigo'
+            correo: email, // Usar 'correo' para el campo de correo electrónico
             contraseña: password
         };
 

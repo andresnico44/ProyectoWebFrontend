@@ -19,9 +19,6 @@ document.getElementById("recovery-form").addEventListener("submit", async (event
     const recoveryData = { correo: email }; // Ajuste: usar la clave `correo` para el backend
     const endpoint = "http://localhost:8080/api/usuarios/recuperar-contrasena";
 
-    const submitButton = document.querySelector("#submit-button");
-    //submitButton.disabled = true; // Deshabilitar botón mientras se procesa la solicitud
-
     try {
         const response = await fetch(endpoint, {
             method: "POST",
@@ -33,6 +30,9 @@ document.getElementById("recovery-form").addEventListener("submit", async (event
 
         if (response.ok) {
             showMessage("Se ha enviado un correo con el enlace de recuperación.", "success");
+            setTimeout(() => {
+                location.href = '../login/index.html'; // Redirigir al login tras éxito
+            }, 3000);
         } else {
             const errorData = await response.json();
             showMessage(errorData.message || "No se pudo procesar la solicitud.", "error");
@@ -40,8 +40,6 @@ document.getElementById("recovery-form").addEventListener("submit", async (event
     } catch (error) {
         console.error("Error al conectar con el servidor:", error);
         showMessage("Hubo un problema al conectar con el servidor.", "error");
-    } finally {
-        //submitButton.disabled = false; // Rehabilitar botón
     }
 });
 
