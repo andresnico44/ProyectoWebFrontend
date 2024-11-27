@@ -1,12 +1,11 @@
 document.getElementById("recovery-form").addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const codeOrUser = document.getElementById("student-code").value.trim();
     const email = document.getElementById("email").value.trim();
 
-    // Validar campos
-    if (!codeOrUser || !email) {
-        showMessage("Por favor, complete todos los campos.", "error");
+    // Validar campo de correo
+    if (!email) {
+        showMessage("Por favor, ingrese su correo electrónico.", "error");
         return;
     }
 
@@ -17,20 +16,11 @@ document.getElementById("recovery-form").addEventListener("submit", async (event
         return;
     }
 
-    const isStudent = !isNaN(codeOrUser); // Diferenciar entre estudiantes y administradores
-    const recoveryData = { email: email };
-    let endpoint;
+    const recoveryData = { correo: email }; // Ajuste: usar la clave `correo` para el backend
+    const endpoint = "http://localhost:8080/api/usuarios/recuperar-contrasena";
 
-    if (isStudent) {
-        endpoint = "http://localhost:8080/api/estudiantes/recuperar-contrasena";
-        recoveryData.codigo = codeOrUser;
-    } else {
-        endpoint = "http://localhost:8080/api/administradores/recuperar-contrasena";
-        recoveryData.usuario = codeOrUser;
-    }
-
-    //const submitButton = document.querySelector("#submit-button");
-    //submitButton.disabled = true; // Deshabilitar botón
+    const submitButton = document.querySelector("#submit-button");
+    //submitButton.disabled = true; // Deshabilitar botón mientras se procesa la solicitud
 
     try {
         const response = await fetch(endpoint, {
@@ -51,6 +41,22 @@ document.getElementById("recovery-form").addEventListener("submit", async (event
         console.error("Error al conectar con el servidor:", error);
         showMessage("Hubo un problema al conectar con el servidor.", "error");
     } finally {
-        submitButton.disabled = false; // Rehabilitar botón
+        //submitButton.disabled = false; // Rehabilitar botón
     }
 });
+
+// Función para mostrar mensajes de éxito o error
+function showMessage(message, type) {
+    const messageContainer = document.getElementById("message"); // Contenedor de mensajes en HTML
+    messageContainer.innerHTML = message;
+
+    // Establecer el color o clase según el tipo de mensaje (error o éxito)
+    if (type === "success") {
+        messageContainer.style.color = "green"; // Color de éxito
+    } else if (type === "error") {
+        messageContainer.style.color = "red"; // Color de error
+    }
+
+    // Mostrar el mensaje
+    messageContainer.style.display = "block";
+}

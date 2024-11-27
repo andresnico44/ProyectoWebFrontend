@@ -35,12 +35,13 @@ async function registerStudent(event) {
         codigo: studentCode,
         correo: email,
         carrera: career,
-        contraseña: password
+        contraseña: password,
+        rol: 2
     };
 
     try {
         // Hacer la solicitud POST a la API
-        const response = await fetch("http://localhost:8080/api/estudiantes/registro", {
+        const response = await fetch("http://localhost:8080/api/usuarios/registro", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

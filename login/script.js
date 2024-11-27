@@ -4,27 +4,16 @@ async function authenticateUser(event) {
 
     // Validar el formulario antes de proceder
     if (form.checkValidity()) {
-        const code = document.getElementById("student-code").value.trim();
+        const email = document.getElementById("student-code").value.trim();  // Cambiado 'codigo' a 'email'
         const password = document.getElementById("password").value.trim();
-
-        // Verificar si el código es numérico para decidir el tipo de login
-        const isStudentLogin = !isNaN(code); // Si el código es numérico, es estudiante
 
         // Crear el objeto con las credenciales del usuario
         const credentials = {
-            codigo: code,
+            correo: email,  // Usar 'correo' en lugar de 'codigo'
             contraseña: password
         };
 
-        let loginUrl;
-        if (isStudentLogin) {
-            // Si es estudiante, usamos el endpoint de estudiante
-            loginUrl = "http://localhost:8080/api/estudiantes/inicio-sesion";
-        } else {
-            // Si no es numérico, lo tratamos como administrador
-            credentials.usuario = code; // Usamos el código como usuario para el administrador
-            loginUrl = "http://localhost:8080/api/administradores/inicio-sesion";
-        }
+        const loginUrl = "http://localhost:8080/api/usuarios/inicio-sesion"; // Endpoint común para todos los usuarios
 
         try {
             // Realizar la solicitud POST con las credenciales
