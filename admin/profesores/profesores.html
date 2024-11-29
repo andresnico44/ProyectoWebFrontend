@@ -10,18 +10,34 @@
     <div class="main-container">
         <header>
             <h1>Gestionar Profesores</h1>
-            <p>Añade o actualiza información de los profesores.</p>
-            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+            <p>Verifica y añade información de los profesores.</p>
         </header>
-        <!-- Formulario para añadir profesores -->
-        <form id="formProfesores" class="formulario">
-            <input type="text" id="nombreProfesor" placeholder="Nombre del Profesor" required>
+        <!-- Formulario para verificar correo -->
+        <form id="formVerificarCorreo" class="formulario">
             <input type="email" id="emailProfesor" placeholder="Correo Electrónico" required>
+            <button type="button" class="btn-consultar" onclick="verificarCorreo()">Consultar</button>
+            <p id="mensajeVerificacion" style="color: red;"></p>
+        </form>
+        <!-- Formulario para añadir profesores -->
+        <form id="formAgregarProfesor" class="formulario" style="display: none;">
+            <input type="text" id="nombreProfesor" placeholder="Nombre del Profesor" required>
             <button type="submit" class="btn-calificar">Añadir Profesor</button>
         </form>
-        <!-- Tarjetas para listar profesores -->
-        <div class="professors-container" id="listaProfesores">
-            <!-- Tarjetas dinámicas -->
+        <!-- Contenedor para tabla de profesores -->
+        <div class="tabla-container" id="tablaProfesores">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo Electrónico</th>
+                        <th>Materias</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="listaProfesores">
+                    <!-- Filas dinámicas -->
+                </tbody>
+            </table>
         </div>
     </div>
     <script src="../profesores/profesores.js"></script>

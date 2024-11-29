@@ -11,21 +11,35 @@
         <header>
             <h1>Gestionar Materias</h1>
             <p>Añade nuevas materias o visualiza las existentes.</p>
-            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
         </header>
+
+        <!-- Formulario para verificar materia -->
+        <form id="formVerificarMateria" class="formulario">
+            <input type="text" id="nombreMateriaConsulta" placeholder="Nombre de la Materia" required>
+            <button type="button" class="btn-consultar" onclick="consultarMateria()">Consultar</button>
+            <p id="mensajeVerificacion" style="color: red;"></p>
+        </form>
+
         <!-- Formulario para añadir materias -->
-        <form id="formMaterias" class="formulario">
+        <form id="formMaterias" class="formulario" style="display: none;">
             <input type="text" id="nombreMateria" placeholder="Nombre de la Materia" required>
+            <select id="profesorSelect" required>
+                <!-- Las opciones de profesores se llenarán dinámicamente con JS -->
+            </select>
+            <input type="email" id="correoProfesor" placeholder="Correo Electrónico del Profesor" required disabled>
             <button type="submit" class="btn-calificar">Añadir Materia</button>
         </form>
+
         <!-- Tabla para listar materias -->
-        <div class="tabla-container">
+        <div class="tabla-container" id="tablaMaterias" style="display: none;">
             <h2>Lista de Materias</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Código</th>
                         <th>Nombre</th>
+                        <th>Profesor</th>
+                        <th>Correo del Profesor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -34,7 +48,20 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Modal de Confirmación -->
+        <div id="modalConfirmacion" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>La materia no está registrada. ¿Deseas registrarla?</p>
+                <button id="btnRegistrar" class="btn-calificar">Registrar</button>
+                <button id="btnCancelar" class="btn-eliminar">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Contenedor para mensajes de confirmación -->
+        <div id="mensajeConfirmacion" style="color: green; margin-top: 10px;"></div>
     </div>
-    <script src="../materias/materias.js"></script>
+
+    <script src="materias.js"></script>
 </body>
 </html>
