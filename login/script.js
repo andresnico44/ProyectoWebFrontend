@@ -29,7 +29,9 @@ async function authenticateUser(event) {
             if (response.ok) {
                 const result = await response.json();
                 console.log("Login exitoso:", result);
-                window.location.href = "/principal/index.html";
+
+                // Redirigir a la página principal con el correo como parámetro en la URL
+                window.location.href = `/principal/index.html?correo=${encodeURIComponent(email)}`;
             } else {
                 const errorData = await response.json();
                 console.error("Error de login:", errorData.message || "Credenciales incorrectas");
