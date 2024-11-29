@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Materias</title>
+    <link rel="stylesheet" href="../materias/materias.css">
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Gestionar Materias</h1>
+            <p>Añade nuevas materias o visualiza las existentes.</p>
+            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </header>
+        <!-- Formulario para añadir materias -->
+        <form id="formMaterias" class="formulario">
+            <input type="text" id="nombreMateria" placeholder="Nombre de la Materia" required>
+            <button type="submit" class="btn-calificar">Añadir Materia</button>
+        </form>
+        <!-- Tabla para listar materias -->
+        <div class="tabla-container">
+            <h2>Lista de Materias</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="listaMaterias">
+                    <!-- Filas dinámicas -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../materias/materias.js"></script>
+</body>
+</html>

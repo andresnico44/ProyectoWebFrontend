@@ -1,0 +1,95 @@
+/* Estilo general */
+body {
+    font-family: "Parkinsans", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf5e6; /* Fondo claro */
+    color: #333;
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* Contenedor principal */
+.main-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+/* Cabecera */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #d32f2f; /* Rojo destacado */
+    font-weight: bold;
+}
+
+header p {
+    font-size: 1.2em;
+    color: #777; /* Gris claro */
+}
+
+/* Botón de cerrar sesión */
+button.btn-cerrar-sesion {
+    background-color: #d32f2f; /* Rojo destacado */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+button.btn-cerrar-sesion:hover {
+    background-color: #b71c1c; /* Rojo más oscuro */
+}
+
+/* Contenedor de opciones */
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Tarjeta de opciones */
+.option-card {
+    background-color: #ffffff; /* Fondo blanco */
+    border: 2px solid #ddd; /* Borde gris claro */
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 20px;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.option-card:hover {
+    transform: translateY(-10px); /* Elevar tarjeta */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}
+
+/* Título de las tarjetas */
+.option-card h3 {
+    font-size: 1.5em;
+    color: #d32f2f; /* Rojo destacado */
+    margin-bottom: 10px;
+}
+
+/* Descripción de las tarjetas */
+.option-card p {
+    font-size: 1em;
+    color: #777; /* Gris claro */
+    line-height: 1.5;
+}

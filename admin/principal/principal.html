@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador</title>
+    <link rel="stylesheet" href="../principal/principal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Panel de Administrador</h1>
+            <p>Bienvenido. Desde aquí puedes gestionar profesores, materias y estudiantes.</p>
+            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </header>
+        <div class="options-container">
+            <!-- Opción: Añadir materias -->
+            <div class="option-card" onclick="redirigir('materias')">
+                <h3>Añadir Materias</h3>
+                <p>Gestiona las materias disponibles para los estudiantes.</p>
+            </div>
+
+            <!-- Opción: Añadir profesores -->
+            <div class="option-card" onclick="redirigir('profesores')">
+                <h3>Añadir Profesores</h3>
+                <p>Agrega y actualiza la información de los profesores.</p>
+            </div>
+
+            <!-- Opción: Matricular estudiantes -->
+            <div class="option-card" onclick="redirigir('estudiantes')">
+                <h3>Matricular Estudiantes</h3>
+                <p>Asigna estudiantes a las materias correspondientes.</p>
+            </div>
+        </div>
+    </div>
+    <script src="../principal/principal.js"></script>
+</body>
+</html>

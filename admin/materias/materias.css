@@ -1,0 +1,81 @@
+/* Formularios */
+form.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+form input, form select {
+    padding: 12px;
+    border: 2px solid #d32f2f;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form button {
+    align-self: flex-start;
+}
+
+/* Tablas */
+.tabla-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #d32f2f;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #f2f2f2;
+}
+
+/* Tarjetas de Profesores */
+.professors-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.professor-card {
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: 300px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+}
+
+.professor-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.professor-card h3 {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.professor-card p {
+    font-size: 1em;
+    color: #777;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriculación de Estudiantes</title>
+    <link rel="stylesheet" href="../estudiantes/estudiantes.css">
+</head>
+<body>
+
+<div class="main-container">
+    <!-- Cabecera -->
+    <header>
+        <h1>Matriculación de Estudiantes</h1>
+        <p>Consulta y matricula a los estudiantes en las materias correspondientes.</p>
+    </header>
+
+    <!-- Formulario de búsqueda -->
+    <div>
+        <label for="searchBar">Correo del Estudiante:</label>
+        <input type="email" id="searchBar" placeholder="Ingresa el correo del estudiante">
+        <button class="btn-consultar" onclick="consultarEstudiante()">Consultar</button>
+        <button class="btn-matricular" onclick="mostrarMatricular()">Matricular</button>
+    </div>
+
+    <!-- Contenedor de resultados de materias -->
+    <div class="result-container" id="resultContainer" style="display:none;">
+        <h3>Materias Matriculadas:</h3>
+        <table id="materiasTabla">
+            <tr>
+                <th>Materia</th>
+                <th>Profesor</th>
+                <th>Correo del Profesor</th>
+                <th>Eliminar</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Formulario de matrícula -->
+    <div class="form-matricular" id="formMatricular" style="display:none;">
+        <h3>Matricular Estudiante</h3>
+        <div class="form-group">
+            <label for="materiaSelect">Selecciona la Materia:</label>
+            <select id="materiaSelect">
+                <option value="mat1">Materia 1</option>
+                <option value="mat2">Materia 2</option>
+                <option value="mat3">Materia 3</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="profesorSelect">Selecciona el Profesor:</label>
+            <select id="profesorSelect">
+                <option value="prof1">Profesor 1</option>
+                <option value="prof2">Profesor 2</option>
+                <option value="prof3">Profesor 3</option>
+            </select>
+        </div>
+        <button class="btn-matricular" onclick="matricularEstudiante()">Matricular</button>
+    </div>
+
+    <!-- Contenedor para mensajes de error o éxito -->
+    <div id="mensaje" style="color: red; margin-top: 10px;"></div> <!-- Agregado para los mensajes -->
+
+</div>
+
+<script src="../estudiantes/estudiantes.js"></script>
+</body>
+</html>

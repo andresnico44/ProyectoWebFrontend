@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Profesores</title>
+    <link rel="stylesheet" href="../profesores/profesores.css">
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Gestionar Profesores</h1>
+            <p>Añade o actualiza información de los profesores.</p>
+            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </header>
+        <!-- Formulario para añadir profesores -->
+        <form id="formProfesores" class="formulario">
+            <input type="text" id="nombreProfesor" placeholder="Nombre del Profesor" required>
+            <input type="email" id="emailProfesor" placeholder="Correo Electrónico" required>
+            <button type="submit" class="btn-calificar">Añadir Profesor</button>
+        </form>
+        <!-- Tarjetas para listar profesores -->
+        <div class="professors-container" id="listaProfesores">
+            <!-- Tarjetas dinámicas -->
+        </div>
+    </div>
+    <script src="../profesores/profesores.js"></script>
+</body>
+</html>
