@@ -32,6 +32,8 @@ function obtenerCodigoPorCorreo(correo) {
             if (data) {
                 const codigo = data;  // El código es directamente el valor devuelto
                 if (codigo) {
+                    // Guardar el código en el localStorage
+                    localStorage.setItem('codigoEstudiante', codigo);
                     // Si se obtuvo un código válido, obtener los profesores
                     obtenerProfesores(codigo);
                 } else {
@@ -120,8 +122,16 @@ function mostrarProfesores(profesores) {
 
 // Función para redirigir a la página de calificación con los parámetros
 function calificarProfesor(nombreProfesor, materia, correoProfesor) {
-    // Redirige a la página de calificación y pasa los parámetros en la URL
-    window.location.href = `../calificar-profesor/index.html?nombre=${encodeURIComponent(nombreProfesor)}&materia=${encodeURIComponent(materia)}&correo=${encodeURIComponent(correoProfesor)}`;
+    // Obtener el código del estudiante desde el localStorage
+    const codigoEstudiante = localStorage.getItem('codigoEstudiante');  // Suponiendo que se guardó previamente en el localStorage
+    
+    if (!codigoEstudiante) {
+        alert("No se pudo obtener el código del estudiante.");
+        return;
+    }
+
+    // Redirige a la página de calificación y pasa los parámetros en la URL, incluyendo el código del estudiante
+    window.location.href = `../calificar-profesor/index.html?nombre=${encodeURIComponent(nombreProfesor)}&materia=${encodeURIComponent(materia)}&correo=${encodeURIComponent(correoProfesor)}&codigo=${encodeURIComponent(codigoEstudiante)}`;
 }
 
 // Función para obtener las materias de un profesor mediante su correo
