@@ -1,38 +1,43 @@
-document.addEventListener('DOMContentLoaded', function() {
-    cargarTablaMaterias();
+const crearMateriaApi = "http://localhost:8080/api/materias/crear-materia";
+const consultarProfesoresApi = "http://localhost:8080/api/profesores/profesores";
+const obtenerProfesorPorCorreoApi = "http://localhost:8080/api/profesores/por-correo";  // Nuevo endpoint para obtener profesor por correo
+
+// Al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
     llenarSelectProfesores();
 });
 
-// Lista de profesores genéricos y sus correos
-const profesoresCorreos = {
-    "Profesor 1": "profesor1@ejemplo.com",
-    "Profesor 2": "profesor2@ejemplo.com",
-    "Profesor 3": "profesor3@ejemplo.com"
-};
-
-const profesores = Object.keys(profesoresCorreos); // Obtener los nombres de los profesores
-
-function llenarSelectProfesores() {
-    const profesorSelect = document.getElementById('profesorSelect');
+// Función para llenar el select de profesores
+async function llenarSelectProfesores() {
+    const profesorSelect = document.getElementById("profesorSelect");
     profesorSelect.innerHTML = '<option value="">Seleccione un profesor</option>';
-    
-    profesores.forEach(profesor => {
-        const option = document.createElement('option');
-        option.value = profesor;  // El valor de la opción será el nombre del profesor
-        option.textContent = profesor;  // El texto que se muestra en la opción será el nombre del profesor
-        profesorSelect.appendChild(option);
-    });
+
+    try {
+        const response = await fetch(consultarProfesoresApi);
+        if (!response.ok) throw new Error("Error al consultar los profesores.");
+        const profesores = await response.json();
+
+        profesores.forEach(profesor => {
+            const option = document.createElement("option");
+            option.value = profesor.id; // Se asume que cada profesor tiene un ID
+            option.textContent = `${profesor.nombre} (${profesor.correo})`;
+            profesorSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar los profesores:", error);
+        mostrarMensaje("mensajeVerificacion", "No se pudieron cargar los profesores.");
+    }
 }
 
 // Función para consultar si una materia ya está registrada
 function consultarMateria() {
-    const nombreMateria = document.getElementById('nombreMateriaConsulta').value.trim();
+    const nombreMateria = document.getElementById("nombreMateriaConsulta").value.trim();
     if (!nombreMateria) {
-        mostrarMensaje('mensajeVerificacion', 'Por favor, ingrese un nombre de materia válido.');
+        mostrarMensaje("mensajeVerificacion", "Por favor, ingrese un nombre de materia válido.");
         return;
     }
 
-    const lista = document.getElementById('listaMaterias').children;
+    const lista = document.getElementById("listaMaterias").children;
     let existe = false;
 
     for (let i = 0; i < lista.length; i++) {
@@ -44,186 +49,153 @@ function consultarMateria() {
     }
 
     if (existe) {
-        mostrarMensaje('mensajeVerificacion', 'La materia ya está registrada.');
-        document.querySelector('.tabla-container').style.display = 'block';
+        mostrarMensaje("mensajeVerificacion", "La materia ya está registrada.");
+        document.querySelector(".tabla-container").style.display = "block";
     } else {
-        mostrarMensaje('mensajeVerificacion', 'La materia no está registrada.');
-        document.getElementById('formMaterias').style.display = 'none';
-        document.getElementById('modalConfirmacion').style.display = 'block';
-        materiaParaRegistrar = nombreMateria;
+        mostrarMensaje("mensajeVerificacion", "");
+        agregarMateriaATabla(nombreMateria); // Agregar directamente a la tabla
     }
 }
 
-// Registrar materia al confirmar el modal
-document.getElementById('btnRegistrar').addEventListener('click', function () {
-    registrarMateria(materiaParaRegistrar);
-    document.getElementById('modalConfirmacion').style.display = 'none';
-});
+// Función para agregar una nueva materia a la tabla
+function agregarMateriaATabla(nombreMateria) {
+    const lista = document.getElementById("listaMaterias");
+    const nuevaFila = document.createElement("tr");
 
-// Función para registrar una nueva materia
-function registrarMateria(nombreMateria) {
-    const lista = document.getElementById('listaMaterias');
-    const nuevaFila = document.createElement('tr');
-    const materias = JSON.parse(localStorage.getItem('materias')) || [];
-    
-    // Obtener el siguiente ID secuencial, siempre comenzando desde 0001
-    const id = obtenerSiguienteId();
-
-    const correoProfesor = document.getElementById('correoProfesor').value.trim();
-    const nombreProfesor = document.getElementById('profesorSelect').value || '';  // Puede ser vacío si no se selecciona un profesor
-
+    const codigoMateria = generarCodigo();
     nuevaFila.innerHTML = `
-        <td>${id}</td>
-        <td>${nombreMateria}</td>
+        <td><input type="text" class="input-codigo" value="${codigoMateria}" disabled></td>
+        <td><input type="text" class="input-nombre" value="${nombreMateria}"></td>
         <td>
-            <select class="select-profesor" disabled>
+            <select class="select-profesor">
                 <option value="">Seleccione un profesor</option>
-                ${profesores.map(profesor => `<option value="${profesor}">${profesor}</option>`).join('')}
             </select>
-        </td>  <!-- Cinta desplegable para elegir profesor -->
-        <td>${correoProfesor}</td>
+        </td>
+        <td><span class="correo-profesor"></span></td>
         <td>
-            <button class="btn-eliminar" onclick="eliminarMateria(this)">Eliminar</button>
-            <button class="btn-listar" onclick="listarEstudiantes('${nombreMateria}')">Listar Estudiantes</button>
-            <button class="btn-aceptar" onclick="aceptarProfesor(this)">Aceptar</button>
-            <button class="btn-editar" onclick="editarProfesor(this)">Editar</button>
+            <button class="btn-aceptar" onclick="registrarMateria(this)">Aceptar</button>
+            <button class="btn-editar" onclick="habilitarEdicion(this)">Editar</button>
         </td>
     `;
     lista.appendChild(nuevaFila);
 
-    // Guardar la materia en localStorage
-    guardarMateriaEnLocalStorage(nombreMateria, id, nombreProfesor, correoProfesor);
+    llenarSelectProfesoresFila(nuevaFila); // Llenar select de profesores
+    document.querySelector(".tabla-container").style.display = "block";
+}
+
+// Función para llenar el select de profesores en una fila específica
+async function llenarSelectProfesoresFila(fila) {
+    try {
+        const response = await fetch(consultarProfesoresApi);
+        if (!response.ok) throw new Error("Error al consultar los profesores.");
+        const profesores = await response.json();
+
+        const selectProfesor = fila.querySelector(".select-profesor");
+        profesores.forEach(profesor => {
+            const option = document.createElement("option");
+            option.value = profesor.id;
+            option.textContent = `${profesor.nombre} (${profesor.correo})`;
+            selectProfesor.appendChild(option);
+        });
+
+        // Evento para actualizar el correo del profesor al seleccionarlo
+        selectProfesor.addEventListener("change", function () {
+            const correoSpan = fila.querySelector(".correo-profesor");
+            const profesorSeleccionado = profesores.find(p => p.id == selectProfesor.value);
+            correoSpan.textContent = profesorSeleccionado ? profesorSeleccionado.correo : "";
+        });
+    } catch (error) {
+        console.error("Error al cargar los profesores:", error);
+    }
+}
+
+// Función para habilitar la edición de una fila
+function habilitarEdicion(boton) {
+    const fila = boton.parentElement.parentElement;
+    fila.querySelector(".input-codigo").disabled = false;
+    fila.querySelector(".input-nombre").disabled = false;
+    fila.querySelector(".select-profesor").disabled = false;
+}
+
+// Función para obtener el nombre del profesor por correo
+async function obtenerProfesorPorCorreo(correo) {
+    try {
+        const response = await fetch(`${obtenerProfesorPorCorreoApi}?correo=${correo}`);
+        if (!response.ok) throw new Error("Profesor no encontrado.");
+        const profesor = await response.json();
+        return profesor.nombre;  // Retorna el nombre del profesor
+    } catch (error) {
+        console.error("Error al obtener el profesor:", error);
+        return null;
+    }
+}
+
+// Función para registrar la materia
+async function registrarMateria(boton) {
+    const fila = boton.parentElement.parentElement;
+    const nombreMateria = fila.querySelector(".input-nombre").value.trim();
+
+    // Obtener el correo del profesor desde el select de la fila
+    const profesorSelect = fila.querySelector(".select-profesor");
+    const correoProfesor = profesorSelect.options[profesorSelect.selectedIndex].text.split('(')[1].slice(0, -1);  // Extraer el correo
+
+    // Obtener el nombre del profesor usando su correo
+    const nombreProfesor = await obtenerProfesorPorCorreo(correoProfesor);
+
+    if (!nombreProfesor) {
+        mostrarMensaje("mensajeVerificacion", "Profesor no encontrado.");
+        return;
+    }
+
+    // Obtener el código de la materia
+    const codigo = fila.querySelector(".input-codigo").value.trim();
+
+    // Ahora, enviamos los datos al servidor para registrar la materia
+    fetch(crearMateriaApi, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombre: nombreMateria,
+            codigo: codigo,
+            nombreProfesor: nombreProfesor // Aquí se envía el nombre del profesor
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al registrar la materia');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Materia registrada:', data);
+        mostrarMensaje('mensajeConfirmacion', 'La materia fue agregada con éxito.', 'green');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        mostrarMensaje('mensajeConfirmacion', 'Hubo un error al registrar la materia.', 'red');
+    });
+
+    // Mostrar la tabla de materias
     document.querySelector('.tabla-container').style.display = 'block';
     mostrarMensaje('mensajeVerificacion', '');
     mostrarMensaje('mensajeConfirmacion', 'La materia fue agregada.', 'green');
 }
 
-// Función para obtener el siguiente ID secuencial que siempre empieza desde 0001
-function obtenerSiguienteId() {
-    let materias = JSON.parse(localStorage.getItem('materias')) || [];
-    
-    // Si no hay materias, el primer ID será 0001
-    if (materias.length === 0) {
-        return "0001";
-    }
-    
-    // Obtener el ID más bajo que esté disponible, comenzando desde 0001
-    let idsExistentes = materias.map(materia => parseInt(materia.id));
-    let nuevoId = 1; // Empezamos con el primer ID posible (1)
-    
-    // Buscamos el primer ID disponible que no esté en la lista de IDs existentes
-    while (idsExistentes.includes(nuevoId)) {
-        nuevoId++;
-    }
-    
-    // Guardamos el nuevo ID en el localStorage para el siguiente uso
-    return nuevoId.toString().padStart(4, '0');
+// Función para generar un código aleatorio para la materia
+function generarCodigo() {
+    const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numeros = "0123456789";
+    return letras.charAt(Math.floor(Math.random() * letras.length)) +
+        letras.charAt(Math.floor(Math.random() * letras.length)) +
+        numeros.charAt(Math.floor(Math.random() * numeros.length)) +
+        numeros.charAt(Math.floor(Math.random() * numeros.length));
 }
 
-// Función para aceptar el profesor seleccionado
-function aceptarProfesor(boton) {
-    const fila = boton.parentElement.parentElement;
-    const selectProfesor = fila.querySelector('.select-profesor');
-    const correoProfesor = profesoresCorreos[selectProfesor.value] || '';  // Obtener el correo asociado al profesor
-
-    // Deshabilitar el select
-    selectProfesor.disabled = true;
-    
-    // Actualizar el correo del profesor
-    fila.children[3].textContent = correoProfesor;
-    
-    // Cambiar el estilo del botón de Aceptar (si quieres cambiar el texto o deshabilitarlo)
-    boton.disabled = true;
-}
-
-// Función para editar el profesor
-function editarProfesor(boton) {
-    const fila = boton.parentElement.parentElement;
-    const selectProfesor = fila.querySelector('.select-profesor');
-    
-    // Habilitar el select
-    selectProfesor.disabled = false;
-
-    // Cambiar el estilo del botón de Editar (si quieres cambiar el texto o deshabilitarlo)
-    boton.disabled = true;
-    
-    // Rehabilitar el botón de Aceptar
-    const botonAceptar = fila.querySelector('.btn-aceptar');
-    botonAceptar.disabled = false;
-}
-
-// Función para eliminar una materia
-function eliminarMateria(boton) {
-    const fila = boton.parentElement.parentElement;
-    const idMateria = fila.children[0].innerText;
-
-    // Eliminar la fila de la tabla
-    fila.remove();
-
-    // Eliminar la materia de localStorage
-    eliminarMateriaDeLocalStorage(idMateria);
-
-    // Si no hay más materias, ocultamos la tabla
-    if (document.getElementById('listaMaterias').children.length === 0) {
-        document.querySelector('.tabla-container').style.display = 'none';
-    }
-}
-
-// Función para listar los estudiantes de una materia (ejemplo simplificado)
-function listarEstudiantes(nombreMateria) {
-    alert(`Listado de estudiantes para la materia: ${nombreMateria}`);
-}
-
-// Función para guardar una materia en localStorage
-function guardarMateriaEnLocalStorage(nombreMateria, idMateria, nombreProfesor, correoProfesor) {
-    let materias = JSON.parse(localStorage.getItem('materias')) || [];
-    const nuevaMateria = { id: idMateria, nombre: nombreMateria, profesor: nombreProfesor, correo: correoProfesor };
-    materias.push(nuevaMateria);
-    localStorage.setItem('materias', JSON.stringify(materias));
-}
-
-// Función para eliminar una materia de localStorage
-function eliminarMateriaDeLocalStorage(idMateria) {
-    let materias = JSON.parse(localStorage.getItem('materias')) || [];
-    materias = materias.filter(materia => materia.id !== idMateria); // Filtrar la materia eliminada
-    localStorage.setItem('materias', JSON.stringify(materias)); // Guardar los cambios en localStorage
-}
-
-// Función para cargar las materias desde localStorage al cargar la página
-function cargarTablaMaterias() {
-    const materias = JSON.parse(localStorage.getItem('materias')) || [];
-    const listaMaterias = document.getElementById('listaMaterias');
-    listaMaterias.innerHTML = '';
-
-    materias.forEach(materia => {
-        const fila = document.createElement('tr');
-        fila.innerHTML = `
-            <td>${materia.id}</td>
-            <td>${materia.nombre}</td>
-            <td>
-                <select class="select-profesor" disabled>
-                    <option value="">Seleccione un profesor</option>
-                    ${profesores.map(profesor => `<option value="${profesor}" ${profesor === materia.profesor ? 'selected' : ''}>${profesor}</option>`).join('')}
-                </select>
-            </td>
-            <td>${materia.correo}</td>
-            <td>
-                <button class="btn-eliminar" onclick="eliminarMateria(this)">Eliminar</button>
-                <button class="btn-listar" onclick="listarEstudiantes('${materia.nombre}')">Listar Estudiantes</button>
-                <button class="btn-aceptar" onclick="aceptarProfesor(this)">Aceptar</button>
-                <button class="btn-editar" onclick="editarProfesor(this)">Editar</button>
-            </td>
-        `;
-        listaMaterias.appendChild(fila);
-    });
-
-    if (materias.length > 0) {
-        document.querySelector('.tabla-container').style.display = 'block';
-    }
-}
-
-function mostrarMensaje(elementId, message, color = 'red') {
-    const element = document.getElementById(elementId);
-    element.innerText = message;
-    element.style.color = color;
+// Función para mostrar mensajes
+function mostrarMensaje(id, mensaje, color = "red") {
+    const elemento = document.getElementById(id);
+    elemento.textContent = mensaje;
+    elemento.style.color = color;
 }

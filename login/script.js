@@ -30,8 +30,19 @@ async function authenticateUser(event) {
                 const result = await response.json();
                 console.log("Login exitoso:", result);
 
-                // Redirigir a la página principal con el correo como parámetro en la URL
-                window.location.href = `/principal/index.html?correo=${encodeURIComponent(email)}`;
+                // Obtener el rol del usuario (1 para admin, 2 para estudiante)
+                const role = result.rol; // Asumiendo que 'rol' es devuelto como un número (1 o 2)
+
+                // Redirigir según el rol
+                if (role === 1) {
+                    // Si el rol es 1 (administrador)
+                    window.location.href = `/admin/principal/principal.html?correo=${encodeURIComponent(email)}`;
+                } else if (role === 2) {
+                    // Si el rol es 2 (estudiante)
+                    window.location.href = `/principal/index.html?correo=${encodeURIComponent(email)}`;
+                } else {
+                    showMessage("Rol desconocido", "error");
+                }
             } else {
                 const errorData = await response.json();
                 console.error("Error de login:", errorData.message || "Credenciales incorrectas");

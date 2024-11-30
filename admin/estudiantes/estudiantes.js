@@ -1,36 +1,24 @@
-// Simulaciones de datos para materias y profesores
-const estudiantesMatriculados = {
-    "estudiante1@mail.com": [
-        { materia: "Matemática", profesor: "Profesor 1", correoProfesor: "profesor1@mail.com" },
-        { materia: "Física", profesor: "Profesor 2", correoProfesor: "profesor2@mail.com" }
-    ],
-    "estudiante2@mail.com": [
-        { materia: "Química", profesor: "Profesor 3", correoProfesor: "profesor3@mail.com" }
-    ]
-};
-
-// Espera que el DOM esté completamente cargado antes de ejecutar cualquier código
 document.addEventListener("DOMContentLoaded", function() {
     // Consulta de estudiante
     function consultarEstudiante() {
-        const correo = document.getElementById("searchBar").value; // Correo del estudiante
+        const codigoEstudiante = document.getElementById("searchBar").value; // Código del estudiante
         const mensaje = document.getElementById("mensaje");
         const resultadoConsulta = document.getElementById("resultContainer");
         const materiasTabla = document.getElementById("materiasTabla");
-        
+
         // Ocultar el formulario de matrícula si está visible
         document.getElementById("formMatricular").style.display = "none";
 
-        // Validación de correo vacío
-        if (!correo) {
-            mensaje.textContent = "Por favor ingresa un correo.";
+        // Validación de código vacío
+        if (!codigoEstudiante) {
+            mensaje.textContent = "Por favor ingresa un código de estudiante.";
             mensaje.style.color = "red";
             resultadoConsulta.style.display = "none";
             return;
         }
 
         // Consultar las materias del estudiante
-        const materias = estudiantesMatriculados[correo];
+        const materias = estudiantesMatriculados[codigoEstudiante];
         if (!materias) {
             mensaje.textContent = "Este estudiante no está matriculado en ninguna materia.";
             mensaje.style.color = "red";
@@ -55,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <td>${materia.materia}</td>
                 <td>${materia.profesor}</td>
                 <td>${materia.correoProfesor}</td>
-                <td><button class="btn-eliminar" onclick="eliminarMateria('${correo}', ${index})">Eliminar</button></td>
+                <td><button class="btn-eliminar" onclick="eliminarMateria('${codigoEstudiante}', ${index})">Eliminar</button></td>
             `;
             materiasTabla.appendChild(tr);
         });
@@ -65,9 +53,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Eliminar materia
-    function eliminarMateria(correo, index) {
+    function eliminarMateria(codigoEstudiante, index) {
         const mensaje = document.getElementById("mensaje");
-        const materias = estudiantesMatriculados[correo];
+        const materias = estudiantesMatriculados[codigoEstudiante];
         if (!materias || index < 0 || index >= materias.length) {
             mensaje.textContent = "Materia no encontrada.";
             mensaje.style.color = "red";
@@ -85,44 +73,81 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Función para mostrar el formulario de matrícula
     function mostrarMatricular() {
+        // Obtener las materias disponibles desde el backend
+        fetch("http://localhost:8080/api/materias/materias")
+            .then(response => response.json())
+            .then(materias => {
+                const materiaSelect = document.getElementById("materiaSelect");
+                materiaSelect.innerHTML = ""; // Limpiar opciones anteriores
+                materias.forEach(materia => {
+                    const option = document.createElement("option");
+                    option.value = materia.nombre; // Guardamos el nombre de la materia, no el id
+                    option.textContent = materia.nombre;
+                    materiaSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error("Error al cargar las materias:", error);
+            });
+
         document.getElementById("formMatricular").style.display = "block";
     }
 
     // Función para matricular al estudiante
     function matricularEstudiante() {
-        const correo = document.getElementById("searchBar").value;
-        const materia = document.getElementById("materiaSelect").value;
-        const profesor = document.getElementById("profesorSelect").value;
-        const correoProfesor = profesor === "prof1" ? "profesor1@mail.com" :
-                                profesor === "prof2" ? "profesor2@mail.com" : "profesor3@mail.com";
+        const codigoEstudiante = document.getElementById("searchBar").value;  // Código del estudiante
+        const materiaNombre = document.getElementById("materiaSelect").value;  // Nombre de la materia
         const mensaje = document.getElementById("mensaje");
 
         // Validación de campos vacíos
-        if (!correo || !materia || !profesor) {
+        if (!codigoEstudiante || !materiaNombre) {
             mensaje.textContent = "Todos los campos son obligatorios.";
             mensaje.style.color = "red";
             return;
         }
 
-        // Matricular al estudiante (simulado)
-        if (!estudiantesMatriculados[correo]) {
-            estudiantesMatriculados[correo] = [];
-        }
+        // Obtener el código de la materia utilizando el nombre
+        fetch(`http://localhost:8080/api/materias/buscar?nombre=${materiaNombre}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("No se pudo encontrar la materia");
+                }
+                return response.json();
+            })
+            .then(materia => {
+                // Asegurarnos de que se ha encontrado la materia y que contiene un ID
+                if (!materia || !materia.id) {
+                    mensaje.textContent = "Materia no encontrada.";
+                    mensaje.style.color = "red";
+                    return;
+                }
 
-        estudiantesMatriculados[correo].push({ materia, profesor, correoProfesor });
+                const materiaId = materia.id;  // Código de la materia
 
-        mensaje.textContent = `Estudiante matriculado en ${materia} con ${profesor}.`;
-        mensaje.style.color = "green";
-
-        // Limpiar el formulario
-        document.getElementById("materiaSelect").value = "";
-        document.getElementById("profesorSelect").value = "";
-
-        // Ocultar el formulario de matrícula
-        document.getElementById("formMatricular").style.display = "none";
-
-        // Actualizar la lista de materias
-        consultarEstudiante();
+                // Matricular al estudiante con el código de la materia
+                fetch(`http://localhost:8080/api/estudiantes/${codigoEstudiante}/materias/${materiaId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    mensaje.textContent = `Estudiante matriculado en ${data.nombre}.`;
+                    mensaje.style.color = "green";
+                    consultarEstudiante();  // Actualizar la lista de materias
+                })
+                .catch(error => {
+                    mensaje.textContent = "Error al matricular al estudiante.";
+                    mensaje.style.color = "red";
+                    console.error("Error al matricular estudiante:", error);
+                });
+            })
+            .catch(error => {
+                mensaje.textContent = "Error al buscar la materia.";
+                mensaje.style.color = "red";
+                console.error("Error al buscar la materia:", error);
+            });
     }
 
     // Exponer funciones para el uso en el HTML

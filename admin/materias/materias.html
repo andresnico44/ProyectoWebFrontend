@@ -20,15 +20,14 @@
             <p id="mensajeVerificacion" style="color: red;"></p>
         </form>
 
-        <!-- Formulario para añadir materias -->
-        <form id="formMaterias" class="formulario" style="display: none;">
-            <input type="text" id="nombreMateria" placeholder="Nombre de la Materia" required>
-            <select id="profesorSelect" required>
-                <!-- Las opciones de profesores se llenarán dinámicamente con JS -->
-            </select>
-            <input type="email" id="correoProfesor" placeholder="Correo Electrónico del Profesor" required disabled>
-            <button type="submit" class="btn-calificar">Añadir Materia</button>
-        </form>
+        <!-- Modal de Confirmación -->
+        <div id="modalConfirmacion" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>La materia no está registrada. ¿Deseas registrarla?</p>
+                <button id="btnRegistrar" class="btn-calificar" onclick="registrarMateria()">Registrar</button>
+                <button id="btnCancelar" class="btn-eliminar" onclick="cerrarModal()">Cancelar</button>
+            </div>
+        </div>
 
         <!-- Tabla para listar materias -->
         <div class="tabla-container" id="tablaMaterias" style="display: none;">
@@ -39,7 +38,6 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Profesor</th>
-                        <th>Correo del Profesor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -49,17 +47,8 @@
             </table>
         </div>
 
-        <!-- Modal de Confirmación -->
-        <div id="modalConfirmacion" class="modal" style="display: none;">
-            <div class="modal-content">
-                <p>La materia no está registrada. ¿Deseas registrarla?</p>
-                <button id="btnRegistrar" class="btn-calificar">Registrar</button>
-                <button id="btnCancelar" class="btn-eliminar">Cancelar</button>
-            </div>
-        </div>
-
-        <!-- Contenedor para mensajes de confirmación -->
-        <div id="mensajeConfirmacion" style="color: green; margin-top: 10px;"></div>
+        <!-- Select global de Profesores (si es necesario) -->
+        <select id="profesorSelect" style="display:none"></select>
     </div>
 
     <script src="materias.js"></script>
